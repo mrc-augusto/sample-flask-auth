@@ -74,6 +74,9 @@ def update_user(id_user):
 @login_required
 def delete_user(id_user):
   user  = User.query.get(id_user)
+  if id_user == current_user.id:
+    return jsonify({'message': 'Não é possível remover o seu usuário'}), 403
+  
   if user:
     db.session.delete(user)
     db.session.commit()
